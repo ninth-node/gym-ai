@@ -1,10 +1,18 @@
 from fastapi import APIRouter
-from app.api.api_v1.endpoints import auth
+from app.api.api_v1.endpoints import auth, members, membership_plans
 
 api_router = APIRouter()
 
 # Include authentication endpoints
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+
+# Include member management endpoints
+api_router.include_router(members.router, prefix="/members", tags=["Members"])
+
+# Include membership plan endpoints
+api_router.include_router(
+    membership_plans.router, prefix="/membership-plans", tags=["Membership Plans"]
+)
 
 
 @api_router.get("/status")
