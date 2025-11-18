@@ -53,6 +53,9 @@ class Member(Base):
     # QR Code for Check-in
     qr_code = Column(String, unique=True, nullable=True)
 
+    # Stripe integration
+    stripe_customer_id = Column(String, unique=True, nullable=True, index=True)
+
     # Tracking
     total_check_ins = Column(Integer, default=0, nullable=False)
     last_check_in = Column(DateTime(timezone=True), nullable=True)
@@ -65,6 +68,7 @@ class Member(Base):
     # Relationships
     user = relationship("User", backref="member_profile")
     membership_plan = relationship("MembershipPlan")
+    payments = relationship("Payment", back_populates="member", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Member {self.user_id}>"

@@ -22,9 +22,17 @@ class AISettings(BaseSettings):
 
     # ChromaDB Settings
     CHROMADB_HOST: str = Field(default="chromadb", description="ChromaDB host")
-    CHROMADB_PORT: int = Field(default=8001, description="ChromaDB port")
+    CHROMADB_PORT: int = Field(default=8000, description="ChromaDB port")
     CHROMADB_COLLECTION_NAME: str = Field(
         default="gym_knowledge", description="ChromaDB collection name"
+    )
+    CHROMADB_MODE: str = Field(
+        default="http",
+        description="ChromaDB mode: 'http' for persistent, 'memory' for in-memory"
+    )
+    CHROMADB_PERSIST_DIRECTORY: str = Field(
+        default="/chroma/data",
+        description="Directory for persistent storage (when not using HTTP)"
     )
 
     # LangSmith Settings (for monitoring)
