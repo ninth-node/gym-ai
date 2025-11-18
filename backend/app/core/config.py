@@ -34,9 +34,12 @@ class Settings(BaseSettings):
     # Third-party integrations
     STRIPE_SECRET_KEY: str = ""
     STRIPE_PUBLISHABLE_KEY: str = ""
+    STRIPE_WEBHOOK_SECRET: str = ""
     TWILIO_ACCOUNT_SID: str = ""
     TWILIO_AUTH_TOKEN: str = ""
+    TWILIO_PHONE_NUMBER: str = ""
     SENDGRID_API_KEY: str = ""
+    SENDGRID_FROM_EMAIL: str = "noreply@aigym.com"
 
     # Terra API
     TERRA_API_KEY: str = ""

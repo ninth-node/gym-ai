@@ -12,14 +12,180 @@ Transform your gym from reactive to predictive. Our AI agents work 24/7 to preve
 
 ---
 
-## 🚀 Key Features Implemented
+## 🚀 Completed Features
 
-- **JWT Authentication System** with role-based access control (4 tiers)
-- **Member Management** with profiles, memberships, and check-ins
-- **AI Agent Framework** with 3 operational agents
-- **Real-time Dashboard** with live metrics
-- **Equipment Tracking** with maintenance prediction
-- **Revenue Forecasting** with AI-powered insights
+### 🔐 Authentication & Authorization
+- ✅ **JWT Authentication System**
+  - Access tokens (30-min expiry) & refresh tokens (7-day expiry)
+  - Secure password hashing with bcrypt
+  - Token-based API authentication
+  - Automatic token refresh mechanism
+- ✅ **Role-Based Access Control (RBAC)**
+  - 4-tier role hierarchy: Super Admin → Admin → Staff → Member
+  - Granular permissions per endpoint
+  - Role requirement decorators for endpoints
+
+### 👥 Member Management
+- ✅ **Member Profiles & Registration**
+  - Complete member profiles with personal information
+  - QR code generation for contactless check-ins
+  - Fitness goals and medical conditions tracking
+  - Emergency contact information
+  - Member status management (active/inactive/suspended)
+- ✅ **Membership Plans**
+  - Flexible plan creation with custom pricing and duration
+  - Feature flags (max classes per month, personal trainer access)
+  - Plan association with members
+  - CRUD operations for plans
+- ✅ **Check-in/Check-out System**
+  - Real-time check-in tracking with timestamps
+  - Multiple check-in methods (QR code, manual, biometric)
+  - Check-out functionality
+  - Active occupancy tracking
+  - Historical check-in data
+
+### 📊 Dashboard & Analytics
+- ✅ **Admin Dashboard**
+  - Real-time statistics (total members, active members, today's check-ins, current occupancy)
+  - Quick action buttons for common tasks
+  - Responsive stat cards with live updates
+  - AI insights section
+- ✅ **API Statistics Endpoints**
+  - Dashboard metrics aggregation
+  - Member activity tracking
+  - Occupancy analytics
+
+### 🤖 AI Agent Infrastructure
+- ✅ **Base Agent Framework**
+  - Abstract base agent class with lifecycle management
+  - Agent state management (IDLE, RUNNING, COMPLETED, FAILED)
+  - Configurable timeouts and error handling
+  - Result tracking with success/failure states
+- ✅ **LLM Integration**
+  - Multi-provider support (OpenAI GPT-4, Anthropic Claude)
+  - Configurable LLM parameters (temperature, max tokens)
+  - Fallback handling for API failures
+- ✅ **Vector Storage**
+  - ChromaDB integration for knowledge base
+  - Persistent storage configuration ready
+- ✅ **Monitoring Framework**
+  - LangSmith integration framework (partial implementation)
+  - Local logging capabilities
+  - Agent execution tracking
+
+### 🎯 Operational AI Agents
+
+#### Member Engagement Agent
+- ✅ **Churn Prediction**
+  - Heuristic-based churn risk scoring (0.0-1.0)
+  - Multi-factor analysis (attendance, engagement, membership status)
+  - At-risk member identification (risk score ≥ 0.7)
+- ✅ **Retention Strategies**
+  - AI-generated personalized retention messages
+  - Custom incentive recommendations
+  - Follow-up action suggestions
+  - Engagement metric calculations
+- ✅ **API Endpoints**
+  - `/api/v1/agents/engagement/execute` - Run full analysis
+  - `/api/v1/agents/engagement/analyze` - Analyze specific data
+  - `/api/v1/agents/engagement/at-risk-members` - Get at-risk list
+
+#### Operations Agent
+- ✅ **Equipment Management**
+  - Equipment tracking (name, category, status, location)
+  - Usage metrics (total count, total hours)
+  - Maintenance scheduling (last maintenance, next due date)
+  - IoT device field preparation (device_id, last_sync)
+  - Maintenance prediction based on usage thresholds
+- ✅ **Facility Capacity Analysis**
+  - Real-time occupancy tracking
+  - Daily check-in trend analysis (7-day rolling)
+  - Peak hours identification
+  - Capacity utilization calculations
+- ✅ **API Endpoints**
+  - `/api/v1/agents/operations/execute` - Run operations analysis
+  - `/api/v1/agents/operations/maintenance-predictions` - Get maintenance schedule
+  - `/api/v1/agents/operations/capacity-analysis` - Get capacity insights
+
+#### Financial Agent
+- ✅ **Revenue Analytics**
+  - Monthly Recurring Revenue (MRR) calculations
+  - Revenue forecasting with growth projections (30/60/90 days)
+  - Historical revenue tracking
+- ✅ **Membership Financial Management**
+  - Expiring membership identification
+  - Renewal opportunity tracking
+  - Membership duration analysis
+- ✅ **Pricing Optimization**
+  - Plan-level pricing analysis
+  - Demand analysis by plan
+  - Price adjustment recommendations
+- ✅ **API Endpoints**
+  - `/api/v1/agents/financial/execute` - Run financial analysis
+  - `/api/v1/agents/financial/revenue-forecast` - Get revenue projections
+  - `/api/v1/agents/financial/expiring-memberships` - Get renewal opportunities
+  - `/api/v1/agents/financial/pricing-recommendations` - Get pricing insights
+
+### 🗄️ Database & Infrastructure
+- ✅ **PostgreSQL Database**
+  - Async SQLAlchemy 2.0 ORM
+  - 5 main models: User, Member, MembershipPlan, CheckIn, Equipment
+  - Alembic migrations (3 migrations completed)
+  - Relationship mapping between entities
+- ✅ **Redis Caching**
+  - Session management
+  - Caching layer for frequently accessed data
+  - Pub/sub ready for real-time features
+- ✅ **ChromaDB Vector Database**
+  - Vector storage for AI knowledge base
+  - Semantic search capabilities
+  - Persistent storage configuration
+- ✅ **Background Task Processing**
+  - Celery worker for async tasks
+  - Celery Beat for scheduled tasks
+  - Redis broker integration
+
+### 🎨 Frontend (Next.js 14)
+- ✅ **Authentication UI**
+  - Login page with form validation
+  - Registration page with success flow
+  - Protected route handling
+  - Auto-redirect on auth state changes
+- ✅ **Dashboard Interface**
+  - Responsive admin dashboard
+  - Real-time statistics display
+  - Quick action buttons
+  - Modern navigation bar
+- ✅ **UI Component Library**
+  - Shadcn/ui components (Button, Input, Label, etc.)
+  - 15+ Radix UI primitives configured
+  - Consistent design system
+  - Accessible components
+- ✅ **State Management**
+  - Zustand store for authentication state
+  - API client with automatic token injection
+  - Token storage in localStorage
+  - Request/response interceptors
+- ✅ **Styling System**
+  - Tailwind CSS with custom design tokens
+  - Dark mode variables defined
+  - Responsive breakpoints configured
+  - Animation utilities (tailwindcss-animate)
+
+### 🐳 DevOps & Development
+- ✅ **Docker Compose Environment**
+  - 7 services: PostgreSQL, Redis, ChromaDB, Backend, Frontend, Celery Worker, Celery Beat
+  - Health checks for database services
+  - Volume persistence for data
+  - Hot-reloading for development
+- ✅ **Development Tools**
+  - Makefile with common commands
+  - Environment configuration templates
+  - API documentation (Swagger/ReDoc)
+- ✅ **Package Management**
+  - Python dependencies managed with requirements.txt
+  - Node.js dependencies with package.json
+  - Version pinning for stability
 
 ---
 
@@ -676,204 +842,364 @@ SUPER_ADMIN: # + full system access, user management
 
 ---
 
-## 📋 TODO Items for Team
+## 📋 TODO Items & Roadmap
 
-### 🔴 High Priority
+### 🔴 Critical Priority - AI/ML Production Readiness
 
-#### AI/ML Models (Replace Heuristics)
+#### Replace Heuristic Models with Machine Learning
 
-- [ ] **Churn Prediction ML Model**
-  - Location: `backend/app/agents/engagement/member_engagement_agent.py:predict_churn_risk()`
-  - Current: Heuristic scoring based on check-ins, attendance
-  - Needed: Train ML model on historical member data
-  - Features to include: class participation, social engagement, goal progress
-  - Suggested models: Random Forest, Gradient Boosting, Neural Network
+**1. Churn Prediction ML Model** 🎯
+- **Location**: `backend/app/agents/engagement/member_engagement_agent.py:146` (predict_churn_risk method)
+- **Current State**: Heuristic scoring based on check-in frequency and membership status
+- **Required**: Production-grade ML model trained on historical member data
+- **Suggested Features**:
+  - Check-in frequency and patterns
+  - Class participation rates
+  - Social engagement metrics (workout buddies, group classes)
+  - Goal achievement progress
+  - Payment history and delays
+  - Seasonal attendance patterns
+  - Demographics and member profile data
+- **Suggested Models**: Random Forest, Gradient Boosting (XGBoost/LightGBM), or Neural Network
+- **Success Metric**: Predict churn 2-3 weeks in advance with 75%+ accuracy
 
-- [ ] **Equipment Maintenance Prediction Model**
-  - Location: `backend/app/agents/operations/operations_agent.py:_predict_equipment_maintenance()`
-  - Current: Simple threshold-based logic
-  - Needed: Predictive model using equipment usage patterns
-  - Features: usage count, hours, last maintenance, equipment age, manufacturer data
-  - Suggested: Time series forecasting (LSTM) or survival analysis
+**2. Equipment Maintenance Prediction Model** 🔧
+- **Location**: `backend/app/agents/operations/operations_agent.py:129` (_predict_equipment_maintenance method)
+- **Current State**: Simple threshold-based logic (usage count > 1000 or 90 days since maintenance)
+- **Required**: Predictive maintenance model using equipment usage patterns and sensor data
+- **Suggested Features**:
+  - Total usage count and hours
+  - Days since last maintenance
+  - Equipment age and manufacturer
+  - Historical failure patterns
+  - **IoT sensor data** (vibration, temperature, noise - when integrated)
+  - Usage intensity patterns
+- **Suggested Models**: Time series forecasting (LSTM), Survival Analysis, or Anomaly Detection
+- **Success Metric**: Predict maintenance needs 1-2 weeks before failure with 80%+ accuracy
 
-- [ ] **Revenue Forecasting Model**
-  - Location: `backend/app/agents/financial/financial_agent.py:forecast_revenue()`
-  - Current: Linear growth assumption (5%)
-  - Needed: Time series forecasting with seasonality
-  - Features: historical revenue, member growth, seasonal patterns, market trends
-  - Suggested: ARIMA, Prophet, or LSTM
+**3. Revenue Forecasting Model** 💰
+- **Location**: `backend/app/agents/financial/financial_agent.py:206` (forecast_revenue method)
+- **Current State**: Linear growth assumption (5% monthly growth rate)
+- **Required**: Time series forecasting with seasonality and market factors
+- **Suggested Features**:
+  - Historical revenue (MRR)
+  - Member growth and churn rates
+  - Seasonal patterns (New Year's resolutions, summer slowdown)
+  - Market trends and economic indicators
+  - Marketing campaign effectiveness
+  - Local competition changes
+- **Suggested Models**: ARIMA, Prophet (Facebook), LSTM, or ensemble methods
+- **Success Metric**: 30-day forecast within 10% of actual revenue
 
-#### Integrations
+### 🟠 High Priority - Integrations & Infrastructure
 
-- [ ] **IoT Sensor Integration**
-  - Location: `backend/app/models/equipment.py` (iot_device_id, iot_last_sync fields ready)
-  - Needed: Actual IoT device connectivity
-  - Tasks:
-    - Research IoT platforms (AWS IoT, Azure IoT Hub, etc.)
-    - Implement device registration and authentication
-    - Create data ingestion pipeline
-    - Real-time sensor data processing
-    - Update equipment usage metrics from sensor data
+#### Third-Party Integrations
 
-- [ ] **Payment History Tracking**
-  - Location: Need new model `backend/app/models/payment.py`
-  - Current: No payment tracking implemented
-  - Needed:
-    - Payment model with Stripe integration
-    - Payment history table
-    - Failed payment retry logic
-    - Subscription lifecycle management
-  - Related: `backend/app/agents/financial/financial_agent.py:generate_payment_retry_strategy()`
+**4. Stripe Payment Processing** 💳
+- **Location**: Stripe package installed (`requirements.txt:36`), implementation needed
+- **Files to Create**: `backend/app/models/payment.py`, `backend/app/services/payment_service.py`
+- **Required Features**:
+  - Create Stripe customer on member registration
+  - Subscription creation and management
+  - Webhook handlers for payment events (payment_succeeded, payment_failed, subscription_canceled)
+  - Invoice generation and email delivery
+  - Failed payment retry logic with intelligent timing
+  - Payment history tracking
+- **Related TODOs**:
+  - `backend/app/agents/financial/financial_agent.py:108` - Check payment history for renewal offers
+  - `backend/app/agents/financial/financial_agent.py:333` - Implement smart payment retry logic
 
-- [ ] **Terra API Integration (Wearables)**
-  - Location: Environment variables configured, implementation needed
-  - Tasks:
-    - Implement Terra API client (`backend/app/core/integrations/terra.py`)
-    - Webhook handler for wearable data
-    - Map Terra data to member health metrics
-    - Use in Health & Wellness Agent (Phase 3)
+**5. IoT Sensor Integration** 📡
+- **Location**: `backend/app/models/equipment.py:62` - Fields ready (iot_device_id, iot_last_sync)
+- **Files to Create**: `backend/app/core/integrations/iot.py`, `backend/app/services/iot_service.py`
+- **Required Features**:
+  - Research and select IoT platform (AWS IoT Core, Azure IoT Hub, or similar)
+  - Device registration and authentication system
+  - Real-time data ingestion pipeline
+  - Sensor data processing (usage tracking, anomaly detection)
+  - Automatic equipment usage metric updates
+  - Alert system for equipment issues
+- **Related TODOs**:
+  - `backend/app/agents/operations/operations_agent.py:175` - Use IoT data in maintenance predictions
+  - `backend/app/agents/operations/operations_agent.py:287` - Get actual facility capacity from sensors
 
-- [ ] **Stripe Payment Processing**
-  - Location: API keys configured, implementation needed
-  - Tasks:
-    - Create Stripe customer on member registration
-    - Subscription creation and management
-    - Webhook handlers for payment events
-    - Invoice generation
-    - Failed payment handling
+**6. Terra API Integration (Wearables & Fitness Trackers)** ⌚
+- **Location**: Need to create `backend/app/core/integrations/terra.py`
+- **Current State**: Configured in environment variables, not implemented
+- **Required Features**:
+  - Terra API client implementation
+  - OAuth flow for member device connection
+  - Webhook handler for real-time wearable data
+  - Data mapping (heart rate, steps, calories, sleep, workouts)
+  - Member health metrics dashboard
+  - Integration with Member Engagement Agent
+- **Use Cases**:
+  - Track workout intensity and recovery
+  - Personalized workout recommendations
+  - Overtraining detection and alerts
+  - Goal progress tracking
 
-#### Monitoring & Logging
+**7. Communication Integrations** 📧📱
+- **Location**: Twilio and SendGrid packages installed (`requirements.txt:37-38`)
+- **Files to Create**: `backend/app/core/integrations/twilio.py`, `backend/app/core/integrations/sendgrid.py`
+- **Required Features**:
+  - **SendGrid**: Transactional emails (welcome, receipts, password reset, retention campaigns)
+  - **Twilio**: SMS notifications (check-in confirmations, payment reminders, urgent alerts)
+  - Email template system with dynamic content
+  - SMS template system with personalization
+  - Delivery tracking and analytics
+  - Unsubscribe management
 
-- [ ] **Complete LangSmith Integration**
-  - Location: `backend/app/core/ai/monitoring.py`
-  - Current: Framework in place, TODO markers for implementation
-  - Tasks:
-    - Initialize LangSmith client properly
-    - Send agent execution traces
-    - Log LLM API calls with token counts
-    - Track agent performance metrics
-    - Set up dashboards in LangSmith
+#### AI Infrastructure & Monitoring
 
-- [ ] **Local Logging Infrastructure**
-  - Location: `backend/app/core/ai/monitoring.py:_log_locally()`
-  - Current: Just prints to console
-  - Needed: Proper logging to file/database
-  - Suggested: Use Python logging module with rotation
+**8. Complete LangSmith Integration** 📊
+- **Location**: `backend/app/core/ai/monitoring.py` (multiple TODOs at lines 17, 40, 67, 90)
+- **Current State**: Framework in place with TODO markers
+- **Required Implementation**:
+  - Initialize LangSmith client with API key (line 17)
+  - Send agent execution start/end traces (line 40)
+  - Log LLM API calls with prompts, completions, and token counts (line 67)
+  - Track agent errors and failures (line 90)
+  - Create custom LangSmith dashboards for agent performance
+  - Set up alerts for agent failures or performance degradation
+- **Success Metric**: Full visibility into all agent executions with cost tracking
 
-- [ ] **Production ChromaDB Configuration**
-  - Location: `backend/app/core/ai/vector_store.py`
-  - Current: In-memory client
-  - Needed: HTTP client for production deployment
-  - Tasks:
-    - Update ChromaDB client to use HTTP
-    - Configure persistent storage
-    - Add authentication
-    - Implement backup strategy
+**9. Production ChromaDB Configuration** 🗄️
+- **Location**: `backend/app/core/ai/vector_store.py:13`
+- **Current State**: In-memory ephemeral client (data lost on restart)
+- **Required Changes**:
+  - Switch from ephemeral to HTTP client (line 13)
+  - Configure persistent storage volume
+  - Add authentication for production security
+  - Implement backup and restore strategy
+  - Create collections for different agent knowledge bases
+  - Add monitoring for vector store health
+- **Critical**: Currently losing all vector data on container restart
 
-### 🟡 Medium Priority
+**10. Structured Logging Infrastructure** 📝
+- **Location**: `backend/app/core/ai/monitoring.py:97` (_log_locally method)
+- **Current State**: Only prints to console
+- **Required Implementation**:
+  - Python logging module with proper configuration
+  - Log rotation (daily or size-based)
+  - JSON-structured logs for easy parsing
+  - Different log levels by environment (DEBUG in dev, INFO in prod)
+  - Centralized logging to file/database
+  - Integration with log aggregation tools (ELK stack, CloudWatch, etc.)
 
-#### Agent Enhancements
+### 🟡 Medium Priority - Feature Enhancements
 
-- [ ] **Class Participation Analysis**
-  - Location: `backend/app/agents/engagement/member_engagement_agent.py`
-  - Add class/group fitness tracking
-  - Include in churn prediction model
-  - Analyze attendance patterns by class type
+#### Agent & Analytics Enhancements
 
-- [ ] **Social Engagement Metrics**
-  - Location: Need new model for social interactions
-  - Track workout buddy pairings
-  - Measure social engagement (group workouts, challenges)
-  - Include in member engagement scoring
+**11. Advanced Engagement Analytics** 🎯
+- **Locations**:
+  - `backend/app/agents/engagement/member_engagement_agent.py:179` - Add sophisticated factors to churn prediction
+  - Need new models for class tracking and social interactions
+- **Required Features**:
+  - **Class Participation Tracking**: Attendance by class type, favorite classes, instructor preferences
+  - **Social Engagement Metrics**: Workout buddy pairings, group workout participation, challenges
+  - **Goal Achievement System**: Goal setting, progress tracking, milestone celebrations
+  - Integration into churn prediction model (increase accuracy)
+- **Success Metric**: Reduce churn rate by 15-20% through better engagement insights
 
-- [ ] **Goal Achievement Tracking**
-  - Location: `backend/app/models/member.py` has fitness_goals field
-  - Implement goal setting and tracking system
-  - Progress monitoring
-  - Include in churn prediction and engagement
+**12. Operations Automation** 🏢
+- **Locations**:
+  - `backend/app/agents/operations/operations_agent.py:263-265` - Capacity recommendations and HVAC
+  - `backend/app/agents/operations/operations_agent.py:306` - AI-generated recommendations
+- **Required Features**:
+  - **HVAC & Climate Control**: Smart thermostat integration, occupancy-based optimization
+  - **Automated Capacity Recommendations**: Staff scheduling suggestions, class size recommendations
+  - **Peak Time Predictions**: ML-based forecasting for next 24-48 hours
+  - **Inventory Management**: Automated supply reordering based on usage patterns
+- **Success Metric**: 30% reduction in energy costs, 25% improvement in member satisfaction
 
-- [ ] **HVAC & Climate Control Integration**
-  - Location: `backend/app/agents/operations/operations_agent.py`
-  - Mentioned in capacity analysis
-  - Integrate with smart thermostat APIs
-  - Optimize based on occupancy predictions
+**13. Financial Intelligence** 💼
+- **Locations**:
+  - `backend/app/agents/financial/financial_agent.py:253` - Advanced pricing analysis
+  - `backend/app/agents/financial/financial_agent.py:288` - Competitor pricing data
+  - `backend/app/agents/financial/financial_agent.py:313` - More financial metrics
+- **Required Features**:
+  - **Competitor Pricing Analysis**: Web scraping for local gym prices, market positioning
+  - **Dynamic Pricing Engine**: Demand-based pricing, promotional campaign triggers
+  - **Advanced Financial Metrics**: Customer Lifetime Value (CLV), Customer Acquisition Cost (CAC), payback period
+  - **ROI Analysis**: Equipment purchase recommendations, class profitability analysis
+- **Success Metric**: 10% increase in revenue through optimized pricing
 
-- [ ] **Competitor Pricing Analysis**
-  - Location: `backend/app/agents/financial/financial_agent.py:analyze_pricing_optimization()`
-  - Web scraping for local gym prices
-  - Market analysis dashboard
-  - Dynamic pricing recommendations
+**14. Facility Capacity Configuration** 🏋️
+- **Location**: `backend/app/agents/operations/operations_agent.py:285-287`
+- **Current State**: Hardcoded capacity of 100 members
+- **Required Implementation**:
+  - Create `backend/app/models/facility_config.py` for configurable settings
+  - Database table for facility parameters (total capacity, equipment capacity by type)
+  - Admin UI for capacity management
+  - Time-based capacity (different limits for peak/off-peak hours)
+  - Equipment-specific capacity constraints
 
-#### Testing & Quality
+#### Testing & Quality Assurance
 
-- [ ] **Unit Tests for Agents**
-  - Create `backend/tests/test_agents/`
+**15. Comprehensive Test Suite** 🧪
+- **Current State**: Testing infrastructure configured (`requirements.txt:47-51`), no tests written
+- **Required Implementation**:
+
+  **Backend Unit Tests**:
+  - Create `backend/tests/test_agents/` directory
   - Test each agent's execute() and analyze() methods
   - Mock LLM responses for consistent testing
   - Test error handling and edge cases
+  - Test service layer business logic
+  - Database operation tests with test fixtures
 
-- [ ] **Frontend Unit Tests**
+  **Frontend Unit Tests**:
   - Setup Jest and React Testing Library
-  - Test components: Button, Input, StatCard, etc.
-  - Test auth flows
-  - Test API client error handling
+  - Component tests (Button, Input, StatCard, etc.)
+  - Auth flow tests (login, register, protected routes)
+  - API client error handling tests
+  - State management tests (Zustand stores)
 
-- [ ] **E2E Tests**
-  - Setup Playwright
-  - Test complete user journeys
-  - Auth flow tests
+  **E2E Tests**:
+  - Setup Playwright or Cypress
+  - Complete user journey tests (registration → login → dashboard)
   - Member management workflows
+  - Check-in/check-out flows
+  - Agent execution validation
 
-- [ ] **Load Testing**
-  - Setup Artillery or Locust
-  - Test API endpoint performance
-  - Agent execution under load
-  - Database query optimization
+  **Load Tests**:
+  - Setup Locust or k6
+  - API endpoint performance benchmarks
+  - Concurrent agent execution tests
+  - Database query optimization validation
 
-### 🟢 Low Priority / Future Enhancements
+- **Success Metric**: 80% code coverage, all critical paths tested
 
-#### Features
+**16. Frontend Feature Parity** 🎨
+- **Location**: Frontend currently has minimal UI, backend has full API
+- **Required Implementation**:
+  - Member list view with search and filters
+  - Member detail page with edit capabilities
+  - Membership plan management UI
+  - Equipment management dashboard
+  - Check-in/check-out interface for staff
+  - AI agent insights visualization
+  - Financial dashboard with charts (revenue, MRR trends)
+  - Operations dashboard (occupancy trends, maintenance schedule)
+- **Nice to Have**: Framer Motion animations (configured but not used: `frontend/package.json:32`)
 
-- [ ] **Mobile App** (Phase 6)
-  - React Native implementation
-  - Offline-first architecture
-  - Biometric authentication
-  - Push notifications
+### 🟢 Lower Priority - Future Enhancements
 
-- [ ] **A/B Testing Framework**
-  - For pricing optimization
-  - Retention campaign testing
-  - UI/UX experiments
+#### Advanced Features
 
-- [ ] **Multi-language Support**
-  - i18n for frontend
-  - Backend API response translation
-  - LLM prompt translation for non-English markets
+**17. Mobile Application** 📱 (Phase 6)
+- React Native or Flutter implementation
+- Member check-in via QR code scanning
+- Workout logging and progress tracking
+- Class booking and schedule
+- Push notifications for reminders and alerts
+- Offline-first architecture
+- Biometric authentication
 
-- [ ] **Multi-gym Support**
-  - Gym/organization model
-  - Multi-tenancy architecture
-  - Cross-gym reporting
+**18. A/B Testing Framework** 🧪
+- For pricing optimization experiments
+- Retention campaign effectiveness testing
+- UI/UX experiments and conversion optimization
+- Statistical significance calculations
+- Automated experiment management
 
-#### DevOps
+**19. Multi-language Support** 🌍
+- i18n for frontend (react-i18next)
+- Backend API response translation
+- LLM prompt translation for non-English markets
+- RTL support for Arabic/Hebrew
+- Currency localization
 
-- [ ] **CI/CD Pipeline**
-  - GitHub Actions workflows
-  - Automated testing
-  - Docker image building
-  - Deployment automation
+**20. Multi-Gym / Multi-Tenant Support** 🏢
+- Gym/organization model hierarchy
+- Data isolation between tenants
+- Cross-location reporting and analytics
+- Centralized management dashboard
+- Franchise/chain management features
 
-- [ ] **Production Deployment**
-  - Kubernetes manifests
-  - Helm charts
-  - Infrastructure as Code (Terraform)
-  - Monitoring setup (Prometheus, Grafana)
+#### DevOps & Infrastructure
 
-- [ ] **Backup & Disaster Recovery**
-  - Automated PostgreSQL backups
-  - Point-in-time recovery
-  - Multi-region replication
-  - Disaster recovery playbook
+**21. CI/CD Pipeline** 🚀
+- GitHub Actions workflows
+- Automated testing on pull requests
+- Docker image building and pushing to registry
+- Automated deployment to staging/production
+- Database migration automation
+- Semantic versioning and changelog generation
+
+**22. Production Deployment** ☁️
+- Kubernetes manifests (Deployments, Services, Ingress)
+- Helm charts for easy installation
+- Infrastructure as Code (Terraform or Pulumi)
+- Auto-scaling configuration
+- Load balancing setup
+- SSL/TLS certificate management (Let's Encrypt)
+- Monitoring setup (Prometheus, Grafana, Sentry)
+- APM integration (New Relic, DataDog, etc.)
+
+**23. Backup & Disaster Recovery** 💾
+- Automated PostgreSQL backups (daily full, hourly incremental)
+- Point-in-time recovery capabilities
+- Multi-region replication for high availability
+- Disaster recovery playbook and runbooks
+- Regular restore testing
+- Backup monitoring and alerting
+
+**24. Advanced Security** 🔒
+- Rate limiting middleware (prevent API abuse)
+- API key management for third-party integrations
+- Audit logging for sensitive operations
+- Two-factor authentication (2FA)
+- IP allowlisting for admin operations
+- Penetration testing and security audits
+- GDPR compliance features (data export, deletion)
+
+### 📊 TODO Summary by Component
+
+**Member Engagement Agent**: 5 TODOs
+- ML churn prediction model
+- Class participation tracking
+- Social engagement metrics
+- Goal achievement system
+- Advanced engagement factors
+
+**Operations Agent**: 6 TODOs
+- ML maintenance prediction model
+- IoT sensor integration
+- HVAC integration
+- Capacity recommendations
+- Peak time predictions
+- AI-generated recommendations
+
+**Financial Agent**: 6 TODOs
+- ML revenue forecasting model
+- Payment history tracking
+- Stripe integration
+- Competitor pricing analysis
+- Advanced financial metrics
+- Smart payment retry logic
+
+**Infrastructure**: 6 TODOs
+- Production ChromaDB config
+- LangSmith integration
+- Structured logging
+- Rate limiting
+- CI/CD pipeline
+- Production deployment
+
+**Frontend**: 3 TODOs
+- Feature parity with backend
+- Unit tests
+- E2E tests
+
+**Third-Party Integrations**: 4 TODOs
+- Stripe payments
+- IoT sensors
+- Terra API (wearables)
+- Twilio & SendGrid
+
+**Total Active TODOs**: 30+ items across all priorities
 
 ---
 
@@ -881,31 +1207,100 @@ SUPER_ADMIN: # + full system access, user management
 
 ### Current Limitations
 
-1. **AI Agents Use Heuristics**: Not production-ready without ML models
-2. **No Payment Processing**: Stripe integration not implemented
-3. **No Email/SMS Sending**: Twilio/SendGrid not integrated
-4. **In-Memory ChromaDB**: Will lose data on container restart
-5. **No Rate Limiting**: API vulnerable to abuse
-6. **No Monitoring**: LangSmith partially implemented
-7. **No IoT Integration**: Equipment data is manual entry only
+1. **🤖 AI Agents Use Heuristics**:
+   - Churn prediction uses basic scoring algorithm (not ML-based)
+   - Equipment maintenance prediction uses simple thresholds
+   - Revenue forecasting uses linear growth assumptions
+   - **Impact**: Not production-ready for critical business decisions
+   - **Fix**: See TODOs #1-3 for ML model implementation
+
+2. **💳 No Payment Processing**:
+   - Stripe package installed but not implemented
+   - No payment history tracking
+   - No automated billing or dunning
+   - **Impact**: Manual payment management required
+   - **Fix**: See TODO #4 for Stripe integration
+
+3. **📧 No Communication Layer**:
+   - Twilio/SendGrid packages installed but not integrated
+   - Cannot send transactional emails or SMS
+   - Retention campaigns cannot be executed automatically
+   - **Impact**: Manual member communication required
+   - **Fix**: See TODO #7 for communication integrations
+
+4. **🗄️ In-Memory ChromaDB**:
+   - Vector database loses all data on container restart
+   - Using ephemeral client instead of persistent HTTP client
+   - **Impact**: AI knowledge base is not persistent
+   - **Fix**: See TODO #9 for production ChromaDB configuration
+
+5. **🚫 No Rate Limiting**:
+   - API endpoints have no rate limiting middleware
+   - Vulnerable to abuse and DoS attacks
+   - **Impact**: Not suitable for public-facing deployment
+   - **Fix**: See TODO #24 for rate limiting implementation
+
+6. **📊 Partial Monitoring**:
+   - LangSmith framework in place but not fully implemented
+   - Only console logging (no structured logging)
+   - No cost tracking for LLM API calls
+   - **Impact**: Limited visibility into agent performance and costs
+   - **Fix**: See TODOs #8 and #10 for monitoring completion
+
+7. **📡 No IoT Integration**:
+   - Equipment has IoT fields but no actual device connectivity
+   - Manual equipment usage entry required
+   - No real-time sensor data
+   - **Impact**: Cannot do real-time equipment monitoring
+   - **Fix**: See TODO #5 for IoT sensor integration
+
+8. **🎨 Minimal Frontend UI**:
+   - Only login, register, and basic dashboard implemented
+   - No member management UI
+   - No equipment or financial dashboards
+   - **Impact**: Limited usability for end users
+   - **Fix**: See TODO #16 for frontend feature parity
+
+9. **🧪 No Automated Tests**:
+   - Testing infrastructure configured but no tests written
+   - No CI/CD pipeline
+   - **Impact**: Risk of regressions when making changes
+   - **Fix**: See TODOs #15 and #21
+
+10. **🌍 Single-Tenant Only**:
+    - No multi-gym support
+    - **Impact**: Cannot serve multiple locations
+    - **Fix**: See TODO #20 for multi-tenant architecture
 
 ### Breaking Changes from Previous Commits
 
 None currently. All commits are additive.
+
+### Performance Considerations
+
+- **Database**: PostgreSQL with async SQLAlchemy performs well for <10k members
+- **LLM API Calls**: Agent execution can take 2-10 seconds depending on LLM provider
+- **ChromaDB**: In-memory mode is fast but not scalable beyond development
+- **Celery**: Background task processing not yet utilized (configured but no tasks defined)
 
 ---
 
 ## 🔄 Git Workflow
 
 ```bash
-# Current branch
-git checkout claude/implement-from-docs-01FUjHWWjJ4bM4S6humiQgz7
+# Main development branch (merged)
+# claude/implement-from-docs-01FUjHWWjJ4bM4S6humiQgz7
 
-# Latest commits:
-# 1. feat: Initial project setup with Next.js, FastAPI, and Docker
-# 2. feat: Implement JWT authentication system with user management
-# 3. feat: Implement member management system with dashboard
-# 4. feat: Implement Phase 2 - AI Agent Infrastructure & Core Automation
+# Current documentation branch
+git checkout claude/update-readme-features-011CCSqQkapUvDe6quHwcPTZ
+
+# Recent commits:
+# 1. afbfd80 - feat: Initial project setup with Next.js, FastAPI, and Docker
+# 2. 3f6c473 - feat: Implement JWT authentication system with user management
+# 3. 1df8abc - feat: Implement member management system with dashboard
+# 4. 6797a64 - feat: Implement Phase 2 - AI Agent Infrastructure & Core Automation
+# 5. 2716bb5 - docs: Add comprehensive README with code explanations and TODO items
+# 6. 14b9831 - Merge pull request #1 from ninth-node/claude/implement-from-docs-01FUjHWWjJ4bM4S6humiQgz7
 ```
 
 ---
@@ -937,6 +1332,7 @@ Built with:
 
 ---
 
-**Last Updated**: November 18, 2024
+**Last Updated**: November 18, 2025
 **Version**: Phase 2 Complete
-**Branch**: `claude/implement-from-docs-01FUjHWWjJ4bM4S6humiQgz7`
+**Branch**: `claude/update-readme-features-011CCSqQkapUvDe6quHwcPTZ`
+**Status**: Development - Not Production Ready
