@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.api_v1.endpoints import auth, members, membership_plans
+from app.api.api_v1.endpoints import auth, members, membership_plans, agents
 
 api_router = APIRouter()
 
@@ -13,6 +13,9 @@ api_router.include_router(members.router, prefix="/members", tags=["Members"])
 api_router.include_router(
     membership_plans.router, prefix="/membership-plans", tags=["Membership Plans"]
 )
+
+# Include AI agents endpoints
+api_router.include_router(agents.router, prefix="/agents", tags=["AI Agents"])
 
 
 @api_router.get("/status")

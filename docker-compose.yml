@@ -33,6 +33,18 @@ services:
       timeout: 5s
       retries: 5
 
+  # ChromaDB for AI Vector Storage
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: gym-ai-chromadb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chromadb_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+
   # FastAPI Backend
   backend:
     build:
@@ -49,11 +61,15 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=dev-secret-key-change-in-production
       - JWT_SECRET_KEY=dev-jwt-secret-key-change-in-production
+      - CHROMADB_HOST=chromadb
+      - CHROMADB_PORT=8000
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
+      chromadb:
+        condition: service_started
 
   # Next.js Frontend
   frontend:
@@ -114,3 +130,4 @@ services:
 volumes:
   postgres_data:
   redis_data:
+  chromadb_data:
